@@ -1,0 +1,56 @@
+.app-shell {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f4f9ff 0%, #ebf8ef 100%);
+  color: #16324f;
+}
+
+.navbar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.panel-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 1.25rem;
+  box-shadow: 0 12px 30px rgba(18, 67, 110, 0.08);
+  border: 1px solid rgba(22, 50, 79, 0.08);
+}
+
+.section-header {
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
+  font-weight: 700;
+  color: #113d66;
+}
+
+.table {
+  margin-bottom: 0;
+  --bs-table-bg: transparent;
+}
+
+.alert {
+  border-radius: 12px;
+}
+
+.nav-link {
+  font-weight: 600;
+}
+
+.nav-link.active {
+  box-shadow: inset 0 0 0 1px rgba(17, 61, 102, 0.08);
+}
+
+@media (max-width: 991.98px) {
+  .navbar-nav {
+    margin-top: 0.75rem;
+  }
+}

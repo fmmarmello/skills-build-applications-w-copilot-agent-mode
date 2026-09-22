@@ -37,3 +37,15 @@ class OctofitApiTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIsInstance(response.data[0]["id"], str)
+
+    def test_api_root_includes_leaderboard_and_workout_links(self):
+        response = self.client.get("/api/")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("leaderboard", response.data)
+        self.assertIn("workout-suggestions", response.data)
+        self.assertTrue(str(response.data["leaderboard"]).endswith("/api/leaderboard/"))
+
+        leaderboard_response = self.client.get("/api/leaderboard/")
+        self.assertEqual(leaderboard_response.status_code, status.HTTP_200_OK)
+        self.assertIsInstance(leaderboard_response.data, list)

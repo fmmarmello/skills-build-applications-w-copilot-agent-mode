@@ -10,6 +10,7 @@ from .views import (
     UserProfileViewSet,
     WorkoutSuggestionViewSet,
     api_root,
+    leaderboard,
 )
 
 codespace_name = os.environ.get("CODESPACE_NAME")
@@ -27,5 +28,6 @@ router.register("workout-suggestions", WorkoutSuggestionViewSet)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", api_root, name="api-root"),
+    path("api/leaderboard/", leaderboard, name="leaderboard"),
     path("api/", include(router.urls)),
 ]

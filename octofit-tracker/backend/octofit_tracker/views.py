@@ -12,6 +12,28 @@ from .serializers import (
 )
 
 
+@api_view(["GET"])
+def leaderboard(request):
+    leaderboard_data = (
+        UserProfile.objects.annotate(total_points=Sum("activities__points"))
+        .values("id", "username", "first_name", "last_name", "total_points")
+        .order_by("-total_points", "username")
+    )
+
+    return Response(
+        [
+            {
+                "id": str(item["id"]),
+                "username": item["username"],
+                "first_name": item["first_name"],
+                "last_name": item["last_name"],
+                "total_points": item["total_points"] or 0,
+            }
+            for item in leaderboard_data
+        ]
+    )
+
+
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
@@ -34,17 +56,12 @@ class WorkoutSuggestionViewSet(viewsets.ModelViewSet):
 
 @api_view(["GET"])
 def api_root(request):
-    leaderboard = (
-        UserProfile.objects.annotate(total_points=Sum("activities__points"))
-        .values("id", "username", "total_points")
-        .order_by("-total_points", "username")
-    )
     return Response(
         {
             "users": request.build_absolute_uri("users/"),
             "activities": request.build_absolute_uri("activities/"),
             "teams": request.build_absolute_uri("teams/"),
             "workout-suggestions": request.build_absolute_uri("workout-suggestions/"),
-            "leaderboard": list(leaderboard),
+            "leaderboard": request.build_absolute_uri("leaderboard/"),
         }
     )
